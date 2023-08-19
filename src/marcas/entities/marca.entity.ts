@@ -1,9 +1,9 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @Entity()
-export class Product {
-  @PrimaryGeneratedColumn({ type: 'int4' })
-  id?: number;
+export class Marca {
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @Column({ type: 'varchar', length: 100, nullable: false })
   name: string;
@@ -16,7 +16,7 @@ export class Product {
 
   @Column({ type: 'int8', nullable: false })
   stock: number;
-  
-  @Column({ type: 'int4', nullable: false })
-  user_id: number;
+
+  // Otros campos y propiedades
 }
+
