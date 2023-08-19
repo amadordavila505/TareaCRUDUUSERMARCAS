@@ -41,4 +41,6 @@ export class ProdctsService {
             const updatedProduct = await this.productsRepo.merge(oldProduct, cambios);
             return this.ProductsRepo.save(updatedProduct);
           }
+          
+          
         }

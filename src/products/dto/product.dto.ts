@@ -1,4 +1,5 @@
 import { IsNotEmpty, IsNumber, IsString, MaxLength } from 'class-validator';
+import { Product } from '../entities/product.entity';
 
 export class CreateProductDto {
   @IsNotEmpty()
@@ -23,4 +24,8 @@ export class CreateProductDto {
   @IsNumber()
   @IsNotEmpty()
   stock: number;
+  
+  @IsNotEmpty()
+  @IsNumber()
+  Product_id: number;
 }

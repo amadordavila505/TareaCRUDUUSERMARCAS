@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class User {
@@ -19,4 +19,12 @@ export class User {
 
   @Column({ type: 'boolean', default: true })
   active: boolean;
+  //relaciones
+  @ManyToOne(()=>User)
+  @JoinColumn({
+    name:'user_id', //este campo que relaciona ami tabla
+    referencedColumnName: 'id',//este es del usuario
+  }
+  )
+  autor: User;
 }
