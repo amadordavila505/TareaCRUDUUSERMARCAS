@@ -1,20 +1,22 @@
-import { IsNotEmpty, IsNumber, IsString, MaxLength } from "class-validator";
+import { IsBoolean, IsNotEmpty, IsNumber, IsOptional, IsString, MaxLength } from "class-validator";
 
-  export class CreateMarcasDto {
-    @IsNotEmpty()
-    @IsNumber()
-    id: number;
-    @IsNotEmpty()
-    @IsNumber()
-    marca_id: number;
+export class CreateMarcaDto {
+  @IsNotEmpty()
+  @IsNumber()
+  id: number;
+
+  @IsString()
+  @IsNotEmpty()
+  @MaxLength(100)
+  name: string;
   
-    @IsString()
-    @IsNotEmpty()
-    @MaxLength(100)
-    name: string;
-  
-    @IsNotEmpty()
-    @IsNumber()
-    user_id: number;
-  }
-  
+  @IsBoolean()
+  @IsOptional()
+  active: boolean;
+
+  @IsString()
+  @IsNotEmpty()
+  @MaxLength(100)
+  description: string;
+  // Otros campos según tus necesidades
+}

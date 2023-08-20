@@ -1,25 +1,18 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+
 
 @Entity()
-export class Marcas {
-  @PrimaryGeneratedColumn({ type: 'int4' })
+export class Marca {
+  @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'int4' })
-  marcas_id: number;
+  @Column({ type: 'varchar', length: 100, nullable: false })
+  name: string;
 
-  @Column({ type: 'varchar', nullable: false })
-  nombre: string;
+  @Column({ type: 'boolean', default: true })
+  active: boolean;
 
-  @Column({ type: 'int8' })
-  user_id: number;
-
-  //relaciones
-  @ManyToOne(()=>Marcas)
-  @JoinColumn({
-    name:'user_id', //este campo que relaciona ami tabla
-    referencedColumnName: 'id',//este es del usuario
+  @Column({ type: 'varchar', length: 100, nullable: false })
+  description: string;
   }
-  )
-  autor: Marcas;
-}
+

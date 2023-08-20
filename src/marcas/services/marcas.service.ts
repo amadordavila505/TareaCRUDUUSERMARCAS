@@ -1,45 +1,47 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { MarcasController } from "../controllers/marcas.controllers";
-import { Repository } from "typeorm/repository/Repository";
-import { CreateMarcasDto } from "../dto/marcas.dto";
-import { Marcas } from '../entities/marcas.entity';
-import { Any } from "typeorm";
+import { Marca } from "../entities/marcas.entity";
+import { Repository } from "typeorm";
+import { CreateMarcaDto } from "../dto/marcas.dto";
 
 @Injectable()
 export class MarcasService {
-  public get marcasRepo(): Repository<Marcas> {
-    return this.marcasRepo;
-  }
   constructor(
-    @InjectRepository(MarcasController)
-    private readonly _marcasRepo: Repository<Marcas>,
+    @InjectRepository(Marca)
+    private readonly marcaRepository: Repository<Marca>,
   ) {}
 
-  async create(createMarcasDto: CreateMarcasDto): Promise<any> {
-    const user = this.marcasRepo.create(createMarcasDto);
-    return this.marcasRepo.save(Marcas);
-  }
-  findOne(id: number) {
-    return this.marcasRepo.findOneBy({id});
-  }
-  
+  async create(createMarcaDto: CreateMarcaDto): Promise<Marca> {
+    const marca = new Marca();
+    marca.name = createMarcaDto.name;
+    marca.description = createMarcaDto.description;
+    // Setear otros campos
 
-  async findAll() {
-    return this.marcasRepo.find({
-      order: { id: 'ASC' },
-    });
+    return await this.marcaRepository.save(marca);
   }
 
-  async remove(id: number) {
-    const product = await this.findOne(id); // Usa el método findOne
-    await this.marcasRepo.remove(Marcas);
-    return 'Producto eliminado satisfactoriamente';
+  async findAll(): Promise<Marca[]> {
+    return await this.marcaRepository.find();
   }
 
-  async update(id: number, cambios: CreateMarcasDto) { 
-    const olMarcas = await this.findOne(id); 
-    const updatedMarcas = this.marcasRepo.merge(oldMarcas, cambios);
-    return this.marcasRepo.save(updatedMarcas);
+  async findOne(id: number): Promise<Marca> {
+    return await this.marcaRepository.findOneBy({id});
   }
+
+  async update(id: number, updateMarcaDto: CreateMarcaDto): Promise<Marca> {
+    const marca = await this.marcaRepository.findOneBy({id});
+    if (!marca) {
+      // Manejo de error si no se encuentra la marca
+    }
+
+    marca.name = updateMarcaDto.name;
+    marca.description = updateMarcaDto.description;
+    // Actualizar otros campos
+
+    return await this.marcaRepository.save(marca);
   }
+
+  async remove(id: number): Promise<void> {
+    await this.marcaRepository.delete(id);
+  }
+}
